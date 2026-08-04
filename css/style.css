@@ -1,36 +1,39 @@
 /* ==========================================================================
-   RecruitGPT Academy — Design System (mini, 8-page edition)
-   Signature: the Pipeline Bar (Sourced -> Screened -> Submitted ->
-   Interview -> Offer -> Placed) on the homepage hero.
+   RecruitGPT Academy — Design System v2: "The Requisition Board"
+   Signature: every topic is a job requisition ticket (a real staffing-world
+   artifact) — punch-notched, numbered, stamped OPEN. Section headers are
+   manila folder tabs. Quizzes are scorecards. Flashcards are ruled index
+   cards. Nothing here is the cream/serif/terracotta or navy/pill-nav look.
    ========================================================================== */
 
 :root {
-  --bg: #F5F7FA;
+  /* Color — ink, paper, stamp-red, manila. Deliberately not navy/orange. */
+  --bg: #F1F3EE;
   --surface: #FFFFFF;
-  --surface-2: #EDF1F6;
-  --ink: #131B2E;
-  --ink-muted: #5B6B82;
-  --brand: #2B4C7E;
-  --brand-dark: #1B3055;
-  --accent: #FF5A36;
-  --accent-dark: #E14722;
-  --success: #1F9D55;
-  --border: #E1E7EF;
+  --surface-2: #E9E7DD;
+  --ink: #1C1A17;
+  --ink-muted: #6B6558;
+  --manila: #DCC98F;
+  --manila-dark: #B9862E;
+  --stamp: #B23A2E;
+  --stamp-dark: #8A2C22;
+  --navy: #223142;
+  --ok: #3F7D53;
+  --border: #D8D3C4;
 
-  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
-  --font-body: "Inter", "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Roboto Slab", "Georgia", serif;
+  --font-body: "Work Sans", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2.5rem;
   --space-5: 4rem;
-  --shadow-sm: 0 1px 2px rgba(19, 27, 46, 0.06), 0 1px 1px rgba(19, 27, 46, 0.04);
-  --shadow-md: 0 8px 24px rgba(19, 27, 46, 0.10);
+  --shadow-sm: 0 1px 2px rgba(28, 26, 23, 0.08);
+  --shadow-md: 0 14px 28px -8px rgba(28, 26, 23, 0.22);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -40,6 +43,9 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background: var(--bg);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(28,26,23,0.05) 1px, transparent 0);
+  background-size: 22px 22px;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 16px;
@@ -48,26 +54,27 @@ body {
 }
 
 img { max-width: 100%; display: block; }
-a { color: var(--brand); text-decoration: none; }
+a { color: var(--navy); text-decoration: none; }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
+  font-weight: 700;
   color: var(--ink);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
   margin: 0 0 var(--space-2);
 }
 
-h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); }
-h3 { font-size: 1.15rem; margin-top: var(--space-4); }
+h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.3rem); }
+h3 { font-size: 1.2rem; margin-top: var(--space-4); }
 p  { margin: 0 0 var(--space-2); color: var(--ink); }
 
 code, .mono { font-family: var(--font-mono); }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--stamp);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 @keyframes fade-up {
@@ -75,6 +82,17 @@ code, .mono { font-family: var(--font-mono); }
   to   { opacity: 1; transform: translateY(0); }
 }
 main { animation: fade-up 0.5s var(--ease) both; }
+
+@keyframes stamp-in {
+  0%   { opacity: 0; transform: scale(1.4) rotate(-14deg); }
+  60%  { opacity: 1; transform: scale(0.95) rotate(-4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-3deg); }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -88,106 +106,115 @@ main { animation: fade-up 0.5s var(--ease) both; }
 
 .wrap { max-width: 900px; margin: 0 auto; padding: 0 var(--space-2); }
 
-/* Header ------------------------------------------------------------- */
+/* Header — folder-tab nav, not a pill row -------------------------------- */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(245, 247, 250, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  border-bottom: 3px solid var(--ink);
 }
 
-.header-inner { max-width: 900px; margin: 0 auto; padding: var(--space-2); }
+.header-inner { max-width: 900px; margin: 0 auto; padding: var(--space-2) var(--space-2) 0; }
 
 .brand-mark {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: var(--ink);
 }
 
 .brand-mark::before {
   content: "";
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(255, 90, 54, 0.15);
+  background: var(--stamp);
+  border: 2px solid var(--ink);
+  transform: rotate(-8deg);
 }
 
-.brand-mark:hover { color: var(--brand); }
+.brand-mark:hover { color: var(--stamp-dark); }
 
-.site-nav { margin-top: var(--space-1); }
+.site-nav { margin-top: var(--space-2); }
 
 .site-nav ul {
   list-style: none;
   margin: 0;
-  padding: 0.2rem 0 0.4rem;
+  padding: 0;
   display: flex;
-  gap: 0.5rem;
+  gap: 3px;
   overflow-x: auto;
-  scroll-snap-type: x proximity;
   scrollbar-width: thin;
 }
 
-.site-nav li { scroll-snap-align: start; flex: 0 0 auto; }
+.site-nav li { flex: 0 0 auto; }
 
 .site-nav a {
   display: inline-block;
   white-space: nowrap;
-  padding: 0.4rem 0.9rem;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--brand-dark);
-  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
+  padding: 0.55rem 0.9rem 0.5rem;
+  border: 2px solid var(--ink);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-muted);
+  transform: translateY(3px);
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .site-nav a:hover, .site-nav a:focus-visible {
-  border-color: var(--accent);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-2px);
+  background: var(--manila);
+  color: var(--ink);
+  transform: translateY(0);
 }
 
 .breadcrumb {
   max-width: 900px;
   margin: 0 auto;
-  padding: var(--space-1) var(--space-2) 0;
+  padding: var(--space-2) var(--space-2) 0;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--ink-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-/* Main ----------------------------------------------------------------- */
+.breadcrumb::before { content: "Routed: "; color: var(--stamp-dark); font-weight: 600; }
+
+/* Main -------------------------------------------------------------------- */
 main { padding: var(--space-4) 0 var(--space-5); }
 .page-head { margin-bottom: var(--space-4); }
 
 .eyebrow {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent-dark);
-  background: rgba(255, 90, 54, 0.1);
-  padding: 0.25rem 0.6rem;
-  border-radius: var(--radius-sm);
+  color: var(--stamp-dark);
+  background: var(--surface);
+  border: 2px solid var(--stamp);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
   margin-bottom: var(--space-2);
+  transform: rotate(-2deg);
+  animation: stamp-in 0.5s var(--ease) both;
 }
 
-/* Hero ------------------------------------------------------------------ */
+/* Hero --------------------------------------------------------------------- */
 .hero { padding: var(--space-4) 0 var(--space-3); }
-.hero h2 { font-size: clamp(2rem, 1.5rem + 2.2vw, 3.2rem); max-width: 18ch; }
-.hero-sub { max-width: 52ch; font-size: 1.05rem; color: var(--ink-muted); }
+.hero h2 { font-size: clamp(2rem, 1.5rem + 2.4vw, 3.3rem); max-width: 16ch; }
+.hero-sub { max-width: 50ch; font-size: 1.08rem; color: var(--ink-muted); }
 
 .hero-actions {
   display: flex;
@@ -200,24 +227,32 @@ main { padding: var(--space-4) 0 var(--space-5); }
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.75rem 1.3rem;
+  padding: 0.8rem 1.4rem;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.95rem;
+  font-family: var(--font-body);
+  border: 2px solid var(--ink);
+  cursor: pointer;
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
 }
 
-.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgba(255, 90, 54, 0.28); }
+.btn-primary {
+  background: var(--stamp);
+  color: #fff;
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
 .btn-primary:hover, .btn-primary:focus-visible {
-  background: var(--accent-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(255, 90, 54, 0.34);
+  background: var(--stamp-dark);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
-.btn-ghost { background: var(--surface); color: var(--brand-dark); border: 1px solid var(--border); }
-.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--brand); transform: translateY(-2px); }
+.btn-ghost { background: var(--surface); color: var(--ink); box-shadow: 3px 3px 0 var(--border); }
+.btn-ghost:hover, .btn-ghost:focus-visible { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
 
-/* Pipeline — signature element ------------------------------------------ */
+/* Pipeline — one-time staggered draw-in, not a looping animation ---------- */
 .pipeline {
   list-style: none;
   display: grid;
@@ -228,133 +263,182 @@ main { padding: var(--space-4) 0 var(--space-5); }
 }
 
 .pipeline li {
-  position: relative;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--brand);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-sm);
-  padding: 0.6rem 0.5rem;
+  padding: 0.55rem 0.4rem;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.64rem;
+  font-weight: 600;
+  text-transform: uppercase;
   text-align: center;
   color: var(--ink-muted);
-  overflow: hidden;
+  opacity: 0;
+  animation: rise-in 0.45s var(--ease) both;
 }
 
-.pipeline li:last-child { border-top-color: var(--success); color: var(--success); font-weight: 600; }
-
-.pipeline li::before {
-  content: "";
-  position: absolute;
-  top: 0; left: -60%;
-  width: 40%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 90, 54, 0.18), transparent);
-  animation: sweep 4.5s ease-in-out infinite;
-}
-
-.pipeline li:nth-child(2)::before { animation-delay: 0.3s; }
-.pipeline li:nth-child(3)::before { animation-delay: 0.6s; }
-.pipeline li:nth-child(4)::before { animation-delay: 0.9s; }
-.pipeline li:nth-child(5)::before { animation-delay: 1.2s; }
-.pipeline li:nth-child(6)::before { animation-delay: 1.5s; }
-
-@keyframes sweep {
-  0%   { left: -60%; }
-  60%  { left: 120%; }
-  100% { left: 120%; }
-}
+.pipeline li:nth-child(1) { animation-delay: 0.05s; }
+.pipeline li:nth-child(2) { animation-delay: 0.12s; }
+.pipeline li:nth-child(3) { animation-delay: 0.19s; }
+.pipeline li:nth-child(4) { animation-delay: 0.26s; }
+.pipeline li:nth-child(5) { animation-delay: 0.33s; }
+.pipeline li:nth-child(6) { animation-delay: 0.40s; background: var(--ok); color: #fff; border-color: var(--ink); }
 
 @media (max-width: 640px) {
   .pipeline { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Card grid --------------------------------------------------------------- */
+/* Requisition tickets — the signature element ----------------------------- */
 .card-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: var(--space-2);
+  gap: var(--space-3) var(--space-2);
+  counter-reset: reqnum 1140;
 }
 
+.card-grid li { counter-increment: reqnum; }
+
 .card-grid a {
+  position: relative;
   display: block;
   height: 100%;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-2) 1.4rem;
+  padding: 1.4rem var(--space-2) 1.5rem;
   color: var(--ink);
-  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+  box-shadow: 4px 4px 0 var(--border);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
+
+/* punch notches, like a ticket stub */
+.card-grid a::before,
+.card-grid a::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--bg);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+.card-grid a::before { left: -9px; }
+.card-grid a::after  { right: -9px; }
 
 .card-grid a:hover, .card-grid a:focus-visible {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--accent);
+  transform: translateY(-5px) rotate(-1deg);
+  box-shadow: 7px 9px 0 var(--border);
 }
 
-.card-grid .card-num {
+.card-grid .req-num {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  color: var(--accent-dark);
-  margin-bottom: 0.4rem;
-  letter-spacing: 0.03em;
+  color: var(--ink-muted);
+  margin-bottom: 0.5rem;
 }
 
-.card-grid .card-title { font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; display: block; margin-bottom: 0.3rem; }
-.card-grid .card-go { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-dark); display: inline-flex; align-items: center; gap: 0.25rem; }
+.card-grid .req-num::before { content: "REQ-" counter(reqnum); }
+
+.card-grid .card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.08rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.card-grid .card-go {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 .card-grid a:hover .card-go { text-decoration: underline; }
 
-/* Content lists ----------------------------------------------------------- */
-main > ul:not(.card-grid):not(.pipeline) { padding-left: 1.2rem; }
-main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
-
-.section-label {
+.card-grid .stamp-open {
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  text-transform: uppercase;
+  font-size: 0.62rem;
+  font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--ink-muted);
-  margin: var(--space-5) 0 var(--space-2);
+  color: var(--stamp);
+  border: 2px solid var(--stamp);
+  border-radius: 999px;
+  padding: 0.12rem 0.5rem;
+  transform: rotate(6deg);
+  opacity: 0.85;
 }
 
-/* Subtopic blocks (combined pages) ---------------------------------------- */
+/* Folder-tab section labels ------------------------------------------------ */
+.section-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--manila);
+  border: 2px solid var(--ink);
+  border-bottom: none;
+  border-radius: 6px 10px 0 0;
+  padding: 0.4rem 1rem 0.3rem;
+  margin: var(--space-5) 0 0;
+  position: relative;
+  top: 2px;
+}
+
+.card-grid + .section-label,
+h2 + .section-label { margin-top: var(--space-5); }
+
+/* Subtopic / accordion — index-card tabs ----------------------------------- */
 .subtopic {
-  border-top: 1px solid var(--border);
-  padding-top: var(--space-2);
-  margin-top: var(--space-3);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-2);
+  background: var(--surface);
+  overflow: hidden;
 }
 
 .subtopic h3 { margin: 0; }
 
-/* Accordion ----------------------------------------------------------- */
 .accordion-toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
   width: 100%;
-  background: none;
+  background: var(--surface-2);
   border: none;
-  padding: 0.4rem 0;
+  padding: 0.85rem 1rem;
   font: inherit;
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-weight: 700;
+  font-size: 1.05rem;
   color: var(--ink);
   cursor: pointer;
   text-align: left;
+  transition: background 0.2s var(--ease);
 }
 
-.accordion-toggle:hover { color: var(--brand); }
+.accordion-toggle:hover { background: var(--manila); }
 
 .chevron {
   flex: 0 0 auto;
   transition: transform 0.3s var(--ease);
-  color: var(--accent);
+  color: var(--stamp);
   font-size: 0.8em;
 }
 
@@ -364,12 +448,19 @@ main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s var(--ease);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 1.55rem,
+    var(--border) 1.55rem,
+    var(--border) calc(1.55rem + 1px)
+  );
 }
 
-.accordion-inner { padding: 0.6rem 0 0.2rem; }
-.accordion-inner p:last-child { margin-bottom: 0; }
+.accordion-inner { padding: 1rem 1.1rem 0.3rem; }
+.accordion-inner p:last-child { margin-bottom: 0.9rem; }
 
-/* Flashcards ------------------------------------------------------------- */
+/* Flashcards — ruled index cards ------------------------------------------- */
 .flashcard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -377,11 +468,7 @@ main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
   margin: var(--space-2) 0 var(--space-3);
 }
 
-.flashcard {
-  perspective: 1000px;
-  height: 130px;
-  cursor: pointer;
-}
+.flashcard { perspective: 1000px; height: 130px; cursor: pointer; }
 
 .flashcard-inner {
   position: relative;
@@ -401,7 +488,8 @@ main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
   align-items: center;
   justify-content: center;
   padding: var(--space-2);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--ink);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   font-size: 0.92rem;
@@ -410,17 +498,21 @@ main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
 
 .flashcard-front {
   background: var(--surface);
-  border: 1px solid var(--border);
+  background-image: linear-gradient(var(--stamp) 2px, transparent 2px);
+  background-size: 100% 34px;
+  background-position: top 24px left;
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.1rem;
   color: var(--ink);
+  box-shadow: 3px 3px 0 var(--border);
 }
 
 .flashcard-back {
-  background: var(--brand-dark);
+  background: var(--navy);
   color: #fff;
   transform: rotateY(180deg);
+  box-shadow: 3px 3px 0 var(--border);
 }
 
 .flashcard-hint {
@@ -430,16 +522,33 @@ main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
   margin: -0.4rem 0 var(--space-2);
 }
 
-/* Quiz -------------------------------------------------------------------- */
+/* Quiz — interview scorecard ------------------------------------------------ */
 .quiz {
+  position: relative;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-md);
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-2);
   margin: var(--space-2) 0 var(--space-3);
 }
 
-.quiz-question { font-weight: 600; margin-bottom: var(--space-2); }
+.quiz::before {
+  content: "Scorecard";
+  position: absolute;
+  top: -0.65rem;
+  left: 1rem;
+  background: var(--manila);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.1rem 0.5rem;
+}
+
+.quiz-question { font-family: var(--font-display); font-weight: 700; margin-bottom: var(--space-2); }
 
 .quiz-options {
   list-style: none;
@@ -455,18 +564,18 @@ main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
   text-align: left;
   padding: 0.65rem 0.9rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
+  border: 2px solid var(--border);
+  background: var(--surface);
   font: inherit;
   color: var(--ink);
   cursor: pointer;
   transition: background 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.15s var(--ease);
 }
 
-.quiz-option:hover { transform: translateY(-1px); border-color: var(--brand); }
+.quiz-option:hover { transform: translateX(2px); border-color: var(--navy); }
 
-.quiz-option.is-correct { background: rgba(31, 157, 85, 0.15); border-color: var(--success); }
-.quiz-option.is-incorrect { background: rgba(255, 90, 54, 0.12); border-color: var(--accent); }
+.quiz-option.is-correct { background: rgba(63, 125, 83, 0.14); border-color: var(--ok); }
+.quiz-option.is-incorrect { background: rgba(178, 58, 46, 0.1); border-color: var(--stamp); }
 .quiz-option[disabled] { cursor: default; transform: none; }
 
 .quiz-feedback {
@@ -476,18 +585,19 @@ main > ul:not(.card-grid):not(.pipeline) li { margin-bottom: 0.4rem; }
   margin: 0;
 }
 
-.quiz-feedback.is-correct { color: var(--success); }
-.quiz-feedback.is-incorrect { color: var(--accent-dark); }
+.quiz-feedback.is-correct { color: var(--ok); }
+.quiz-feedback.is-incorrect { color: var(--stamp-dark); }
 
 /* Footer -------------------------------------------------------------- */
 .site-footer {
-  border-top: 1px solid var(--border);
+  border-top: 3px solid var(--ink);
   padding: var(--space-3) 0 var(--space-4);
   color: var(--ink-muted);
   font-size: 0.85rem;
 }
 
 .site-footer .site-nav ul { margin-bottom: var(--space-2); }
+.site-footer .site-nav a { border-radius: 6px; border-bottom: 2px solid var(--ink); transform: none; }
 
 /* Utility -------------------------------------------------------------- */
 .muted { color: var(--ink-muted); }
