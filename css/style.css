@@ -6,18 +6,22 @@
    ========================================================================== */
 
 :root {
-  --bg: #F7F8F7;
+  --bg: #F5F7FA;
   --surface: #FFFFFF;
-  --surface-2: #F0F3F1;
-  --ink: #14181F;
-  --ink-muted: #5B6570;
-  --teal: #0F9B8E;
+  --surface-2: #EEF2F6;
+  --ink: #16202E;
+  --ink-muted: #5B6675;
+  --navy: #17233F;
+  --navy-2: #1F3A63;
+  --teal: #0EA894;
   --teal-dark: #0B7A70;
-  --teal-tint: #E4F5F2;
-  --coral: #FF6B4A;
-  --coral-dark: #E5502F;
-  --ok: #1F9D55;
-  --border: #E4E7E9;
+  --teal-tint: #E3F7F4;
+  --tan: #F2B166;
+  --tan-dark: #8A5A17;
+  --coral: #16A34A;
+  --coral-dark: #0F7D38;
+  --ok: #16A34A;
+  --border: #DFE4EA;
   --shadow-sm: 0 1px 3px rgba(20, 24, 31, 0.06), 0 1px 2px rgba(20, 24, 31, 0.04);
   --shadow-md: 0 12px 28px -8px rgba(20, 24, 31, 0.16);
   --shadow-teal: 0 10px 24px -8px rgba(15, 155, 142, 0.4);
@@ -103,10 +107,8 @@ main { animation: fade-up 0.5s var(--ease) both; }
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(247, 248, 247, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  background: var(--navy);
+  border-bottom: 3px solid var(--teal);
 }
 
 .header-inner {
@@ -125,7 +127,7 @@ main { animation: fade-up 0.5s var(--ease) both; }
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 1.2rem;
-  color: var(--ink);
+  color: #FFFFFF;
 }
 
 .brand-mark::before {
@@ -133,11 +135,10 @@ main { animation: fade-up 0.5s var(--ease) both; }
   width: 26px;
   height: 26px;
   border-radius: 8px;
-  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-  box-shadow: var(--shadow-teal);
+  background: var(--tan);
 }
 
-.brand-mark:hover { color: var(--teal-dark); }
+.brand-mark:hover { color: var(--teal-tint); }
 
 .site-nav ul {
   list-style: none;
@@ -158,14 +159,17 @@ main { animation: fade-up 0.5s var(--ease) both; }
   border-radius: 999px;
   font-size: 0.86rem;
   font-weight: 500;
-  color: var(--ink-muted);
+  color: rgba(255,255,255,0.75);
   transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .site-nav a:hover, .site-nav a:focus-visible {
-  background: var(--teal-tint);
-  color: var(--teal-dark);
+  background: var(--tan);
+  color: var(--navy);
 }
+
+.site-footer .site-nav a { color: var(--ink-muted); }
+.site-footer .site-nav a:hover { background: var(--teal-tint); color: var(--teal-dark); }
 
 .breadcrumb {
   max-width: 1000px;
@@ -292,7 +296,7 @@ main { padding: var(--space-4) 0 var(--space-5); }
   flex-direction: column;
   height: 100%;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 2px solid var(--teal);
   border-radius: var(--radius-lg);
   padding: var(--space-3);
   color: var(--ink);
