@@ -145,9 +145,19 @@ main { animation: fade-up 0.5s var(--ease) both; }
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 0.3rem;
+  gap: 0.35rem;
   overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.site-nav ul::-webkit-scrollbar { display: none; }
+
+@media (min-width: 700px) {
+  .site-nav ul {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
 }
 
 .site-nav li { flex: 0 0 auto; }
